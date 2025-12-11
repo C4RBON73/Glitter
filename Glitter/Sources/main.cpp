@@ -9,6 +9,13 @@
 #include <cstdio>
 #include <cstdlib>
 
+
+void framebuffer_size_callback(GLFWwindow* window, int width, int height)
+{
+    glViewport(0, 0, width, height);
+} 
+
+
 int main(int argc, char * argv[]) {
 
     // Load GLFW and Create a Window
@@ -17,7 +24,7 @@ int main(int argc, char * argv[]) {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-    glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
+    glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
     auto mWindow = glfwCreateWindow(mWidth, mHeight, "OpenGL", nullptr, nullptr);
 
     // Check for Valid Context
@@ -27,16 +34,19 @@ int main(int argc, char * argv[]) {
     }
 
     //Load GLAD for OpenGL Pointers
-    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+    /*if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
         fprintf(stderr,"Failed to initialize GLAD");
         return -1;
     }
-
+    */
     // Create Context and Load OpenGL Functions
     glfwMakeContextCurrent(mWindow);
     gladLoadGL();
     fprintf(stderr, "OpenGL %s\n", glGetString(GL_VERSION));
+
+    
+    glfwSetFramebufferSizeCallback(mWindow, framebuffer_size_callback);
 
     // Rendering Loop
     while (glfwWindowShouldClose(mWindow) == false) {
@@ -53,3 +63,4 @@ int main(int argc, char * argv[]) {
     }   glfwTerminate();
     return EXIT_SUCCESS;
 }
+
