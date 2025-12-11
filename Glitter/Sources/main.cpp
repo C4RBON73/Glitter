@@ -26,6 +26,13 @@ int main(int argc, char * argv[]) {
         return EXIT_FAILURE;
     }
 
+    //Load GLAD for OpenGL Pointers
+    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+    {
+        fprintf(stderr,"Failed to initialize GLAD");
+        return -1;
+    }
+
     // Create Context and Load OpenGL Functions
     glfwMakeContextCurrent(mWindow);
     gladLoadGL();
